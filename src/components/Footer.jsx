@@ -1,10 +1,16 @@
+"use client"
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { BiLocationPlus } from "react-icons/bi";
 import { FaFacebook, FaFacebookF, FaInstagram, FaXTwitter } from "react-icons/fa6";
 import { MdMail } from "react-icons/md";
 import { PiPhone } from "react-icons/pi";
 
 export default function Footer() {
+    const pathName = usePathname();
+    if(pathName.includes('dashboard')){
+      return null;
+    }
   return (
     <footer className="bg-linear-to-r from-[#1a1a1a] to-[#0f0f0f] text-gray-300 py-12 ">
       <div className="container mx-auto px-4">

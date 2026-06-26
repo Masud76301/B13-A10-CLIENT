@@ -3,11 +3,12 @@
 import Image from "next/image";
 import { Button } from "@heroui/react";
 import { FiPlay, FiSearch } from "react-icons/fi";
+import Link from "next/link";
 
 export default function HeroBanner() {
   return (
     <section className="w-full min-h-[600px] bg-background text-foreground grid grid-cols-1 lg:grid-cols-2 border-b border-divider transition-colors duration-200">
-      
+
       {/* LEFT SIDE: Typography & Actions */}
       <div className="flex flex-col justify-center px-6 py-12 md:px-16 lg:px-24 max-w-2xl">
         {/* Trending Tag */}
@@ -24,27 +25,33 @@ export default function HeroBanner() {
 
         {/* Subtitle */}
         <p className="text-lg text-default-600 dark:text-default-400 leading-relaxed mb-8">
-          A home for food lovers to publish their best dishes, explore global cuisine, 
+          A home for food lovers to publish their best dishes, explore global cuisine,
           and connect with a community that lives to cook.
         </p>
 
         {/* CTA Action Buttons */}
         <div className="flex flex-wrap gap-4 mb-12">
-          <Button 
-            size="lg" 
-            className="bg-foreground text-background font-medium px-8 h-12 shadow-sm transition-transform active:scale-95"
-            startContent={<FiPlay className="text-lg" />}
-          >
-            Start cooking
-          </Button>
-          <Button 
-            size="lg" 
-            variant="outline"
-            className="border-default-300 text-foreground font-medium px-8 h-12 hover:bg-emerald-400"
-            startContent={<FiSearch className="text-lg" />}
-          >
-            Explore recipes
-          </Button>
+          <Link href="/dashboard/user/add-recipe">
+            <Button
+              size="lg"
+              className="bg-foreground text-background font-medium px-8 h-12 shadow-sm transition-transform active:scale-95"
+              startContent={<FiPlay className="text-lg" />}
+            >
+              Add recipe
+            </Button>
+          </Link>
+
+          <Link href="/recipe">
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-default-300 text-foreground font-medium px-8 h-12 hover:bg-emerald-400"
+              startContent={<FiSearch className="text-lg" />}
+            >
+              Explore recipes
+            </Button>
+          </Link>
+
         </div>
 
         {/* Platform Metrics Row */}
@@ -66,7 +73,7 @@ export default function HeroBanner() {
 
       {/* RIGHT SIDE: Interactive Image & UI Overlay Showcase */}
       <div className="relative bg-[#E5E2DB] dark:bg-zinc-800 flex items-center justify-center p-8 lg:p-16 overflow-hidden min-h-[450px] lg:min-h-full transition-colors duration-200">
-        
+
         {/* Floating Capsule 1: Top Right Trending */}
         <div className="absolute top-6 right-6 bg-background/90 backdrop-blur-md p-3 rounded-xl shadow-lg border border-default-200/50 flex items-center gap-3 z-10 transition-transform hover:scale-105 duration-300">
           <div className="w-8 h-8 rounded-lg bg-success-50 dark:bg-success-900/30 flex items-center justify-center text-success">
@@ -93,7 +100,7 @@ export default function HeroBanner() {
         {/* Main Banner Image Container */}
         <div className="relative w-full max-w-[460px] aspect-square rounded-2xl overflow-hidden shadow-2xl transition-all duration-500 hover:shadow-success-900/10">
           <Image
-            src="/banner.jpeg" 
+            src="/banner.jpeg"
             alt="RecipeRoom Featured Dish"
             fill
             priority
@@ -111,7 +118,7 @@ export default function HeroBanner() {
               <span className="text-amber-400">★</span> 4.9 <span className="text-default-400 font-normal">(312 reviews)</span>
             </div>
           </div>
-          
+
           <h3 className="text-base font-bold text-foreground mb-1">
             Creamy mushroom & parmesan risotto
           </h3>

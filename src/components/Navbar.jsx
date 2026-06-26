@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useSession, signOut } from "@/lib/auth-client";
 import { ProfileDropdown } from "./ProfileDropdown";
 import { ThemeSwitch } from "./ThemeSwitch";
+import { usePathname } from "next/navigation";
 // import { signOut, useSession } from "../lib/auth-client";
 
 
@@ -15,6 +16,11 @@ export default function Navbar() {
   const { data: session, isPending } = useSession();
 
   const user = session?.user;
+
+  const pathName = usePathname();
+  if(pathName.includes('dashboard')){
+    return null;
+  }
 
   // const handleSignOut = async () => {
   //   await signOut();
@@ -33,8 +39,8 @@ export default function Navbar() {
   ];
 
   const dashboardLinks = {
-    user: '/dashbord/user',
-    admin: '/dashbord/admin'
+    user: '/dashboard/user',
+    admin: '/dashboard/admin'
 
   }
 
