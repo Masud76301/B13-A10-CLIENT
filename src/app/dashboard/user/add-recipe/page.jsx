@@ -6,6 +6,7 @@ import Link from "next/link";
 import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { FiUploadCloud } from "react-icons/fi";
+import { createRecipe } from "@/lib/action/recipe";
 
 export default function AddRecipe() {
     const router = useRouter();
@@ -82,7 +83,7 @@ export default function AddRecipe() {
         e.preventDefault();
         setUploading(true);
 
-        try {
+        
             let finalImageUrl = formData.imageUrl;
 
             // If an explicit computer file was chosen, upload it to ImgBB first
@@ -96,15 +97,17 @@ export default function AddRecipe() {
                 status: "active",
                 isPubliclyVisible: true,
             };
-
+            const res = await createRecipe(payload)
             console.log(payload);
-            toast.success("Recipe published successfully!");
-            // Add your submit logic / API routes here
-        } catch (error) {
-            alert("Failed to upload image or publish recipe");
-        } finally {
-            setUploading(false);
-        }
+             if (res.insertedId) {
+
+                 toast.success("Job Posted Successfully!");
+                 e.target.reset();
+
+                 setTimeout(() => {
+                     router.push("/dashboard/user");
+                 }, 1500);
+            }
     };
 
     return (
