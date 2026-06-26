@@ -3,22 +3,15 @@
 import { toast } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import React, { useState, useRef } from "react";
-import Image from "next/image";
-import { FiUploadCloud } from "react-icons/fi";
+import React, { useState } from "react";
 
 export default function AddRecipe() {
   const router = useRouter();
-  const fileInputRef = useRef(null);
   
-  // State management for local image upload state
-  const [recipeImage, setRecipeImage] = useState(null);
-  const [uploading, setUploading] = useState(false);
-
   // State management for the recipe form inputs
   const [formData, setFormData] = useState({
     recipeName: "",
-    imageUrl: "", // This will be set automatically after ImgBB upload
+    imageUrl: "",
     category: "Breakfast",
     difficultyLevel: "Easy",
     cuisineType: "Italian",
@@ -32,65 +25,16 @@ export default function AddRecipe() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handles picking the image from the computer and creating a preview URL
-  const handleImageChange = (e) => {
-    const file = e.target.files
-    if (!file) return;
-
-    setRecipeImage({
-      file,
-      preview: URL.createObjectURL(file),
-    });
-  };
-
-  // Asynchronous wrapper to send image payload to ImgBB
-  const uploadImageToImageBB = async (imageFile) => {
-    const dataPayload = new FormData();
-    dataPayload.append("image", imageFile);
-
-    const response = await fetch(
-      `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`,
-      {
-        method: "POST",
-        body: dataPayload,
-      }
-    );
-
-    const data = await response.json();
-    if (!data.success) {
-      throw new Error("Image upload failed");
-    }
-
-    return data.data.url;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setUploading(true);
-
-    try {
-      let finalImageUrl = formData.imageUrl;
-
-      // If an explicit computer file was chosen, upload it to ImgBB first
-      if (recipeImage?.file) {
-        finalImageUrl = await uploadImageToImageBB(recipeImage.file);
-      }
-
-      const payload = {
-        ...formData,
-        imageUrl: finalImageUrl,
-        status: "active",
-        isPubliclyVisible: true,
-      };
-   
-      console.log(payload);
-      toast.success("Recipe published successfully!");
-      // Add your submit logic / API routes here
-    } catch (error) {
-      alert("Failed to upload image or publish recipe");
-    } finally {
-      setUploading(false);
-    }
+    const payload = {
+      ...formData,
+      status: "active",
+      isPubliclyVisible: true,
+    };
+ 
+    console.log(payload);
+    // Add your submit logic / API routes here
   };
 
   return (
@@ -125,45 +69,16 @@ export default function AddRecipe() {
                 />
               </div>
 
-              {/* Recipe Image Upload Block (ImgBB Setup) */}
               <div>
-                <label className="block text-xs font-medium text-default-500 mb-1">Recipe Image</label>
-                
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  className="flex items-center gap-4 w-full bg-default-100 border border-divider rounded-lg px-3 py-1.5 focus:outline-none focus:border-emerald-500 transition text-left"
-                >
-                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md border border-dashed border-divider bg-default-200">
-                    {recipeImage ? (
-                      <Image
-                        src={recipeImage.preview}
-                        width={40}
-                        height={40}
-                        alt="Recipe Preview"
-                        className="h-full w-full rounded-md object-cover"
-                      />
-                    ) : (
-                      <FiUploadCloud className="text-lg text-default-400" />
-                    )}
-                  </div>
-
-                  <div>
-                    <p className="text-xs font-medium text-foreground">
-                      {recipeImage ? recipeImage.file.name.substring(0, 20) + "..." : "Upload local image"}
-                    </p>
-                    <p className="text-[10px] text-default-400">
-                      PNG, JPG up to 5MB
-                    </p>
-                  </div>
-                </button>
-
+                <label className="block text-xs font-medium text-default-500 mb-1">Recipe Image URL (ImgBB)</label>
                 <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  hidden
-                  onChange={handleImageChange}
+                  type="url"
+                  name="imageUrl"
+                  required
+                  placeholder="https://i.ibb.co/.../dish.jpg"
+                  value={formData.imageUrl}
+                  onChange={handleChange}
+                  className="w-full bg-default-100 border border-divider rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-default-400 focus:outline-none focus:border-emerald-500 transition"
                 />
               </div>
             </div>
@@ -283,10 +198,9 @@ export default function AddRecipe() {
             </button>
             <button
               type="submit"
-              disabled={uploading}
-              className="px-5 py-2 text-sm font-semibold text-background bg-foreground hover:opacity-90 rounded-lg transition shadow-md disabled:opacity-50"
+              className="px-5 py-2 text-sm font-semibold text-background bg-foreground hover:opacity-90 rounded-lg transition shadow-md"
             >
-              {uploading ? "Uploading..." : "Publish Recipe"}
+              Publish Recipe
             </button>
           </div>
 
