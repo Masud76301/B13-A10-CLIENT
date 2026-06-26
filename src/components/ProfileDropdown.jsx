@@ -34,13 +34,13 @@ export function ProfileDropdown({ user }) {
                     if (key === "logout") handleSingOut();
                 }}>
                     <Dropdown.Item id="new-file" textValue="New file">
-                        <Link href="/my-favorites"> <Label>My Favorites</Label></Link>
+                        <Link href="/dashboard/user/my-favorites"> <Label>My Favorites</Label></Link>
                     </Dropdown.Item>
                     <Dropdown.Item id="copy-link" textValue="Copy link">
-                        <Link href="/my-recipe"><Label>My Recipe</Label></Link>
+                        <Link href="/dashboard/user/my-recipe"><Label>My Recipe</Label></Link>
                     </Dropdown.Item>
                     <Dropdown.Item id="edit-file" textValue="Edit file">
-                        <Link href='/profile'><Label>Profile</Label></Link>
+                        <Link href='/dashboard/user/profile'><Label>Profile</Label></Link>
                     </Dropdown.Item>
                     <Dropdown.Item id="logout" textValue="logout" variant="danger">
                         <Label>Logout</Label>

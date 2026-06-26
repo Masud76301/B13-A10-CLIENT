@@ -1,37 +1,41 @@
 "use client";
 
-import { Bell, Book, Envelope, Gear, House, LayoutCellsLarge, LayoutSideContentLeft, Magnifier, Person, ShoppingCart, SquarePlus } from "@gravity-ui/icons";
+import { Bell, Book, Envelope, Gear, Heart, House, LayoutCellsLarge, LayoutSideContentLeft, Magnifier, Person, ShoppingCart, SquarePlus } from "@gravity-ui/icons";
 import { Button, Drawer, Avatar, AvatarImage, AvatarFallback, Chip } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useSession } from "@/lib/auth-client"; 
+import { useSession } from "@/lib/auth-client";
 
 export function DashboardSideBar() {
-    const { data: session } = useSession(); 
+    const { data: session } = useSession();
     const user = session?.user;
 
     // Check if user is premium
     const isPremium = user?.role === "premium" || user?.plan === "premium";
 
     const navItems = [
-        { icon: LayoutCellsLarge, label: "Overview" },
-        { icon: SquarePlus, label: "Add Recipe" },
-        { icon: Book, label: "My Recipe" },
-        { icon: ShoppingCart, label: "My Purchased Recipe" },
-        { icon: Person, label: "Profile" }
+        { icon: LayoutCellsLarge, label: "Overview", src: "/dashboard/user" },
+        { icon: SquarePlus, label: "Add Recipe" ,src: "/dashboard/user/add-recipe"},
+        { icon: Book, label: "My Recipe",src: "/dashboard/user/my-recipe" },
+        { icon: ShoppingCart, label: "My Purchased Recipe",src: "/dashboard/user/purchased-recipe" },
+        { icon: Heart, label: "My Favorites",src: "/dashboard/user/my-favorites" },
+        { icon: Person, label: "Profile",src: "/dashboard/user/profile" },
+
     ];
 
     const navContent = (
         <nav className="flex flex-col gap-1">
             {navItems.map((item) => (
-                <button
-                    key={item.label}
-                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground transition-colors hover:bg-default"
-                    type="button"
-                >
-                    <item.icon className="size-5 text-muted" />
-                    {item.label}
-                </button>
+
+                <Link href={item.src} key={item.label}>
+                    <button
+                        className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground transition-colors hover:bg-default"
+                        type="button"
+                    >
+                        <item.icon className="size-5 text-muted" />
+                        {item.label}
+                    </button>
+                </Link>
             ))}
         </nav>
     );
@@ -59,18 +63,18 @@ export function DashboardSideBar() {
                             <AvatarImage src={user?.image} referrerPolicy="no-referrer" />
                             <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
                         </Avatar>
-                        
+
                         <h2 className="text-base font-bold text-foreground leading-tight truncate w-full">
                             {user?.name}
                         </h2>
                         <p className="text-xs text-default-500 mb-3 truncate w-full">
                             {user?.email}
                         </p>
-                        
+
                         {/* Membership Badge */}
-                        <Chip 
-                            size="sm" 
-                            variant="flat" 
+                        <Chip
+                            size="sm"
+                            variant="flat"
                             color={isPremium ? "warning" : "default"}
                             className="font-medium px-3 capitalize"
                         >

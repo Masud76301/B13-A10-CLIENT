@@ -1,5 +1,6 @@
 "use client";
 
+import { Heart, ShoppingBag, ShoppingCart, ThumbsUp } from "@gravity-ui/icons";
 import { FaRegFileAlt } from "react-icons/fa";
 import { HiOutlineUsers } from "react-icons/hi2";
 import { LuZap } from "react-icons/lu";
@@ -7,25 +8,26 @@ import { MdOutlineCheckCircle } from "react-icons/md";
 
 const stats = [
   {
-    title: "Total Job Posts",
+    title: "Total Recipe",
     value: "48",
     icon: FaRegFileAlt,
   },
   {
-    title: "Total Applicants",
+    title: "Total Favorites",
     value: "1,284",
-    icon: HiOutlineUsers,
+    icon: Heart,
   },
   {
-    title: "Active Jobs",
+    title: "Total Likes Received",
     value: "18",
-    icon: LuZap,
+    icon: ThumbsUp,
   },
   {
-    title: "Jobs Closed",
-    value: "32",
-    icon: MdOutlineCheckCircle,
+    title: "Total Purchased Recipe",
+    value: "18",
+    icon: ShoppingCart,
   },
+
 ];
 
 export default function UserStats() {
