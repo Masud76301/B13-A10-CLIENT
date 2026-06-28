@@ -19,7 +19,7 @@ export function DashboardSideBar() {
         { icon: Book, label: "My Recipe",src: "/dashboard/user/my-recipe" },
         { icon: ShoppingCart, label: "My Purchased Recipe",src: "/dashboard/user/purchased-recipe" },
         { icon: Heart, label: "My Favorites",src: "/dashboard/user/my-favorites" },
-        { icon: Person, label: "Profile",src: "/dashboard/user/profile" },
+        { icon: Person, label: "Profile",src: "/dashboard/profile" },
 
     ];
 

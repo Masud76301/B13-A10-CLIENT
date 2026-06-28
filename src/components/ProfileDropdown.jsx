@@ -40,7 +40,7 @@ export function ProfileDropdown({ user }) {
                         <Link href="/dashboard/user/my-recipe"><Label>My Recipe</Label></Link>
                     </Dropdown.Item>
                     <Dropdown.Item id="edit-file" textValue="Edit file">
-                        <Link href='/dashboard/user/profile'><Label>Profile</Label></Link>
+                        <Link href='/dashboard/profile'><Label>Profile</Label></Link>
                     </Dropdown.Item>
                     <Dropdown.Item id="logout" textValue="logout" variant="danger">
                         <Label>Logout</Label>
