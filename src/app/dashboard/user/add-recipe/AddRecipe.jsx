@@ -28,7 +28,11 @@ export default function AddRecipe({user}) {
         prepTime: "",
         ingredients: "",
         instructions: "",
-        userId:user?.id
+        userId:user?.id,
+        authorName:user?.name,
+        likeCount:10,
+        isFeatured:false,
+        
     });
     const handleCancel = (e) => {
         e.preventDefault(); // Prevents the form from attempting to submit/reload the page
