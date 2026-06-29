@@ -1,17 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button } from "@heroui/react";
+import { Button, toast } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/auth-client";
 import { FiHeart, FiBookmark, FiAlertTriangle, FiShoppingBag, FiCreditCard } from "react-icons/fi";
+import { favoritesRecipe } from "@/lib/action/recipe";
 
-export default function RecipeActions({ recipeId, price = "$4.99" }) {
+
+export default function RecipeActions({ recipeId, price = "$0.99" }) {
     const { data: session } = useSession();
     const router = useRouter();
 
     const [isLiked, setIsLiked] = useState(false);
     const [isFavorited, setIsFavorited] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false); // To handle loading state during the API request
 
     const handleAuthenticatedAction = (actionCallback) => {
         if (!session?.user) {
@@ -19,6 +22,40 @@ export default function RecipeActions({ recipeId, price = "$4.99" }) {
             return;
         }
         actionCallback();
+    };
+
+    // Asynchronous handler for saving to favorites
+    const handleSaveToFavorites = async () => {
+        setIsSubmitting(true);
+        try {
+            // Build your backend store payload here
+            const payload = {
+                recipeId: recipeId,
+                userEmail: session?.user?.email, 
+                userId: session?.user?.id,
+                actionType: "favorite",     
+            };
+
+            // Call your API function to save to database
+            const res = await favoritesRecipe(payload);
+
+            if (res?.insertedId) {
+                toast.success("Save to Favourite Successfully");
+                setIsFavorited(true);
+
+                // Delay slightly and redirect to the user's dashboard favorites view
+                setTimeout(() => {
+                    router.push("/dashboard/user/favourite");
+                }, 500);
+            } else {
+                toast.error("Failed to save. Please try again.");
+            }
+        } catch (error) {
+            console.error("Error saving favorite:", error);
+            toast.error("An error occurred while saving to favorites.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -67,25 +104,24 @@ export default function RecipeActions({ recipeId, price = "$4.99" }) {
                             ? 'text-danger bg-danger/5 hover:bg-danger/10 font-semibold' 
                             : 'text-default-700 hover:bg-default-100'
                     }`}
-                    
                     onPress={() => handleAuthenticatedAction(() => setIsLiked(!isLiked))}
                 >
                     <FiHeart className={`size-4 shrink-0 ${isLiked ? 'fill-danger text-danger' : ''}`} />
                     {isLiked ? "Added to Liked Recipes" : "Like this Recipe"}
                 </Button>
 
-                {/* Favorite Row Button */}
+                {/* Favorite Row Button (Integrated with Store Logic) */}
                 <Button
                     variant="light"
                     radius="xl"
                     size="md"
+                    isLoading={isSubmitting} // Shows loading animation while database is executing
                     className={`w-full justify-start font-medium px-4 transition-all ${
                         isFavorited 
                             ? 'text-warning bg-warning/5 hover:bg-warning/10 font-semibold' 
                             : 'text-default-700 hover:bg-default-100'
                     }`}
-                    
-                    onPress={() => handleAuthenticatedAction(() => setIsFavorited(!isFavorited))}
+                    onPress={() => handleAuthenticatedAction(handleSaveToFavorites)}
                 >
                     <FiBookmark className={`size-4 shrink-0 ${isFavorited ? 'fill-warning text-warning' : ''}`} />
                     {isFavorited ? "Saved to Bookmarks" : "Save to Favorites"}

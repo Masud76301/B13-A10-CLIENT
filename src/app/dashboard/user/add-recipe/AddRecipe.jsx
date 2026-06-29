@@ -105,15 +105,14 @@ export default function AddRecipe({user}) {
                 isPubliclyVisible: true,
             };
             const res = await createRecipe(payload)
-            console.log(payload);
              if (res.insertedId) {
 
-                 toast.success("Job Posted Successfully!");
+                 toast.success("Recipe Published Successfully!");
                  e.target.reset();
 
                  setTimeout(() => {
                      router.push("/dashboard/user");
-                 }, 1500);
+                 }, 500);
             }
     };
 

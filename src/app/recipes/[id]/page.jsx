@@ -175,7 +175,7 @@ const RecipeDetailsPage = async ({ params }) => {
                         <div className="lg:sticky lg:top-[50%] lg:-translate-y-1/2 w-full flex flex-col gap-6">
                             <RecipeActions 
                                 recipeId={recipe._id?.toString() || id} 
-                                price="$4.99" 
+                                price="$0.99" 
                             />
                         </div>
                     </div>

@@ -18,7 +18,7 @@ export function DashboardSideBar() {
         { icon: SquarePlus, label: "Add Recipe" ,src: "/dashboard/user/add-recipe"},
         { icon: Book, label: "My Recipe",src: "/dashboard/user/my-recipe" },
         { icon: ShoppingCart, label: "My Purchased Recipe",src: "/dashboard/user/purchased-recipe" },
-        { icon: Heart, label: "My Favorites",src: "/dashboard/user/my-favorites" },
+        { icon: Heart, label: "My Favorites",src: "/dashboard/user/favourite" },
         { icon: Person, label: "Profile",src: "/dashboard/profile" },
 
     ];
