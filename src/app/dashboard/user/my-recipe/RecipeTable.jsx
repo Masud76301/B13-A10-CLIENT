@@ -4,8 +4,9 @@ import { Table, Button } from "@heroui/react";
 import { FiEye, FiEdit2, FiTrash2 } from "react-icons/fi";
 import { Heart, TrashBin } from "@gravity-ui/icons";
 import Image from "next/image";
+import Link from "next/link";
 
-export default function RecipeTable({ recipes}) {
+export default function RecipeTable({ recipes }) {
   return (
     <Table aria-label="Recipe Management Table">
       <Table.ScrollContainer>
@@ -75,24 +76,26 @@ export default function RecipeTable({ recipes}) {
                   <Table.Cell>
                     <div className="flex items-center justify-start gap-1">
                       {/* VIEW BUTTON */}
-                      <Button
-                        isIconOnly
-                        size="sm"
-                        variant="light"
-                        aria-label="View Recipe"
-                        className="text-default-500 hover:text-yellow-500"
-                      >
-                        <FiEye/>
-                      </Button>
+                      <Link href={`/recipes/${recipeId}`}>
+                        <Button
+                          isIconOnly
+                          size="sm"
+                          variant="light"
+                          aria-label="View Recipe"
+                          className="text-default-500 hover:text-yellow-500"
+                        >
+                          <FiEye />
+                        </Button>
+                      </Link>
 
                       {/* EDIT BUTTON */}
-                       <Button isIconOnly size="sm" variant="light"  className="text-default-500 hover:text-blue-600">
-                         <FiEdit2 />
+                      <Button isIconOnly size="sm" variant="light" className="text-default-500 hover:text-blue-600">
+                        <FiEdit2 />
                       </Button>
 
                       {/* DELETE BUTTON */}
-                       <Button isIconOnly size="sm" variant="light" className="text-default-500 hover:text-red-600">
-                         <TrashBin />
+                      <Button isIconOnly size="sm" variant="light" className="text-default-500 hover:text-red-600">
+                        <TrashBin />
                       </Button>
                     </div>
                   </Table.Cell>

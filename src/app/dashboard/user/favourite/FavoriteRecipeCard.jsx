@@ -31,11 +31,13 @@ export default function FavoriteRecipeCard({ favorite, onRemove }) {
   const handleRemoveClick = async (e) => {
     e.preventDefault();
     if (!onRemove) return;
-    
+
     setIsRemoving(true);
     try {
-      // Calls your parent delete handler (e.g., deleting from database)
-      await onRemove(favorite._id || recipeId);
+      // 👇 PASS BOTH IDs AS AN OBJECT HERE
+      await onRemove({
+        recipeId: recipeId,
+      });
     } catch (error) {
       console.error("Failed to remove favorite recipe:", error);
     } finally {
@@ -130,7 +132,7 @@ export default function FavoriteRecipeCard({ favorite, onRemove }) {
             View Details
           </Button>
         </Link>
-        
+
         <Button
           isIconOnly
           color="danger"

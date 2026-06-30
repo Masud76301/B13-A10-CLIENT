@@ -9,3 +9,4 @@ export const createRecipe = async (newRecipeData)=>{
 export const favoritesRecipe = async(favRecipeData) => {
     return serverMutation('/api/favorite',favRecipeData)
 }
+

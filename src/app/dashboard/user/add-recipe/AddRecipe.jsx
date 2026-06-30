@@ -111,7 +111,7 @@ export default function AddRecipe({user}) {
                  e.target.reset();
 
                  setTimeout(() => {
-                     router.push("/dashboard/user");
+                     router.push("/dashboard/user/my-recipe");
                  }, 500);
             }
     };
