@@ -9,6 +9,8 @@ const RecipeDetailsPage = async ({ params }) => {
     const { id } = await params;
     const recipe = await getRecipeById(id);
 
+    
+
     if (!recipe) {
         return (
             <div className="flex min-h-[60vh] flex-col items-center justify-center bg-background text-foreground">

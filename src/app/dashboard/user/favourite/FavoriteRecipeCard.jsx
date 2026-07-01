@@ -34,7 +34,7 @@ export default function FavoriteRecipeCard({ favorite, onRemove }) {
 
     setIsRemoving(true);
     try {
-      // 👇 PASS BOTH IDs AS AN OBJECT HERE
+      // PASS BOTH IDs AS AN OBJECT HERE
       await onRemove({
         recipeId: recipeId,
       });

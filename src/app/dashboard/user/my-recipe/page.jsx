@@ -14,7 +14,7 @@ const MyRecipePage = async () => {
                 <h1 className="text-3xl font-bold"> My Recipe</h1>
                 <p>{recipes.length} recipe published</p>
             </div>
-            <RecipeTable recipes={recipes}></RecipeTable>
+            <RecipeTable recipes={recipes} userId={userId}></RecipeTable>
         </div>
     );
 };

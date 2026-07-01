@@ -3,12 +3,12 @@
 import React, { useState } from 'react';
 import FavoriteRecipeCard from './FavoriteRecipeCard';
 
-import { useRouter } from 'next/navigation'; // 1. Import useRouter
+import { useRouter } from 'next/navigation'; 
 import { removeFavoriteRecipe } from '@/lib/action/favorite';
 
 export default function FavoritesGridClient({ initialFavorites, currentUserId }) {
   const [favorites, setFavorites] = useState(initialFavorites);
-  const router = useRouter(); // 2. Initialize router
+  const router = useRouter(); 
 
   const handleRemoveFavorite = async (cardData) => {
     try {
@@ -20,7 +20,7 @@ export default function FavoritesGridClient({ initialFavorites, currentUserId })
       const response = await removeFavoriteRecipe(remRecipeData);
 
       if (response?.deletedCount > 0 || response?.acknowledged) {
-        // 3. Remove from local screen list state
+   
         setFavorites((prevList) =>
           prevList.filter((fav) => {
             const favRecipeId = fav.recipe?._id?.$oid || fav.recipe?._id || fav._id?.$oid || fav._id;
@@ -28,7 +28,7 @@ export default function FavoritesGridClient({ initialFavorites, currentUserId })
           })
         );
 
-        // 4. 👇 Tell Next.js to update server data counters instantly without a full page reload!
+      
         router.refresh();
       }
     } catch (error) {

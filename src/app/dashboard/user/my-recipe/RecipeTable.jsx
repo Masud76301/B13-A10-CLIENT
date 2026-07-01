@@ -1,12 +1,25 @@
 "use client";
 
 import { Table, Button } from "@heroui/react";
-import { FiEye, FiEdit2, FiTrash2 } from "react-icons/fi";
+import { FiEye, FiEdit2 } from "react-icons/fi";
 import { Heart, TrashBin } from "@gravity-ui/icons";
 import Image from "next/image";
 import Link from "next/link";
+import { deleteRecipe } from "@/lib/action/recipe";
+import { useRouter } from "next/navigation";
+import EditRecipeModal from "./EditRecipeModal";
 
-export default function RecipeTable({ recipes }) {
+export default function RecipeTable({ recipes, userId }) {
+  const router = useRouter(); 
+
+  const handleDeleteRecipe = async (recipeId, currentUserId) => {
+    const res = await deleteRecipe(recipeId, currentUserId);
+    console.log("what is res:",res);
+    if (res?.deletedCount > 0 || res?.acknowledged) {
+       router.refresh();
+    }
+  };
+
   return (
     <Table aria-label="Recipe Management Table">
       <Table.ScrollContainer>
@@ -36,7 +49,7 @@ export default function RecipeTable({ recipes }) {
                           fill
                           className="object-cover"
                           sizes="48px"
-                          unoptimized // Use this if handling direct ImgBB remote links without configuring next.config domains
+                          unoptimized 
                         />
                       </div>
                       <div>
@@ -68,7 +81,7 @@ export default function RecipeTable({ recipes }) {
                   <Table.Cell>
                     <div className="flex items-center gap-1.5 text-default-400 hover:text-danger cursor-pointer transition-colors w-fit">
                       <Heart className="size-4" />
-                      <span className="text-xs font-medium">Like</span>
+                      <span className="text-xs font-medium">{recipe.likeCount}</span>
                     </div>
                   </Table.Cell>
 
@@ -89,12 +102,19 @@ export default function RecipeTable({ recipes }) {
                       </Link>
 
                       {/* EDIT BUTTON */}
-                      <Button isIconOnly size="sm" variant="light" className="text-default-500 hover:text-blue-600">
+                      {/* <Button isIconOnly size="sm" variant="light" className="text-default-500 hover:text-blue-600">
                         <FiEdit2 />
-                      </Button>
+                      </Button> */}
+                      <EditRecipeModal recipe={recipe}/>
 
                       {/* DELETE BUTTON */}
-                      <Button isIconOnly size="sm" variant="light" className="text-default-500 hover:text-red-600">
+                      <Button 
+                        isIconOnly 
+                        size="sm" 
+                        variant="light" 
+                        className="text-default-500 hover:text-red-600" 
+                        onClick={() => handleDeleteRecipe(recipeId, userId)}
+                      >
                         <TrashBin />
                       </Button>
                     </div>

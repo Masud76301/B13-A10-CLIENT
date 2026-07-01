@@ -1,7 +1,6 @@
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
-console.log("baseUrl:", baseUrl);
 
 export const serverFetch = async (path)=>{
     const res = await fetch (`${baseUrl}${path}`);
