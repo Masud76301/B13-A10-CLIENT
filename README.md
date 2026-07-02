@@ -16,8 +16,8 @@ RecipeRoom is a full-stack web application where food lovers can create, share, 
 - **JWT Authentication** – Token-based auth stored in HTTPOnly cookies for security
 - **Profile Management** – Update your name and profile picture
 - **Role-Based Access Control (RBAC)** – Separate dashboards and permissions for Users and Admins. Admins can manage users, recipes, and reports, while regular users access personal dashboards for their own content.
-- **Fully responsive design across all screen sizes
-- **Dark / Light theme toggle
+- **Responsive Design** - Fully responsive design across all screen sizes
+- **Theme Toggle** - Dark / Light theme toggle
 
 ## 📦 NPM Packages Used
 | Package | Purpose |
