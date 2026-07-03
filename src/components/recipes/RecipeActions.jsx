@@ -6,19 +6,20 @@ import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/auth-client";
 import { FiHeart, FiBookmark, FiAlertTriangle, FiShoppingBag, FiCreditCard } from "react-icons/fi";
 import { favoritesRecipe } from "@/lib/action/recipe";
-import { likeRecipe, unlikeRecipe } from "@/lib/action/likes";
-import { CgHello } from "react-icons/cg";
+import { likeRecipe} from "@/lib/action/likes";
 
-export default function RecipeActions({ recipeId, price = "$0.99" }) {
+
+export default  function RecipeActions({ recipeId,initialLiked, price = "$0.99" }) {
     const { data: session } = useSession();
     const router = useRouter();
-    
     // useTransition prevents conflicting router state updates
     const [isPending, startTransition] = useTransition();
 
-    const [isLiked, setIsLiked] = useState(false);
+    const [isLiked, setIsLiked] = useState(initialLiked);
     const [isFavorited, setIsFavorited] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+
 
     const handleAuthenticatedAction = (actionCallback) => {
         if (!session?.user) {
@@ -64,17 +65,10 @@ export default function RecipeActions({ recipeId, price = "$0.99" }) {
     const handleLikes = async () => {
         try {
             const userId = session?.user?.id;
-            let res;
+            const res = await likeRecipe(recipeId, userId);
+       
 
-            if (isLiked) {
-                // res = await unlikeRecipe(recipeId, userId);
-                res = await likeRecipe(recipeId, userId);
-            } else {
-                res = await likeRecipe(recipeId, userId);
-            }
-
-           
-            if (res?.acknowledged || res?.modifiedCount > 0) {
+            if (res?.acknowledged ||res?.modifiedCount > 0) {
                 setIsLiked(!isLiked);
                 toast.success(isLiked ? "Like removed!" : "Recipe liked!");
                 

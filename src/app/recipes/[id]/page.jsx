@@ -4,10 +4,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FiClock, FiUser, FiHeart, FiGlobe, FiLayers, FiArrowLeft } from 'react-icons/fi';
 import RecipeActions from '@/components/recipes/RecipeActions'; // Adjust path based on your folders
+import { isLikedRecipe } from '@/lib/api/likes';
+import { getUserSession } from '@/lib/core/session';
 
 const RecipeDetailsPage = async ({ params }) => {
     const { id } = await params;
+    const user = await getUserSession();
     const recipe = await getRecipeById(id);
+    const recipeId = recipe?._id;
+    const userId =user?.id;
+    const liked = await isLikedRecipe(recipeId, userId);
 
     
 
@@ -176,8 +182,9 @@ const RecipeDetailsPage = async ({ params }) => {
                         */}
                         <div className="lg:sticky lg:top-[50%] lg:-translate-y-1/2 w-full flex flex-col gap-6">
                             <RecipeActions 
-                                recipeId={recipe._id?.toString() || id} 
-                                price="$0.99" 
+                                recipeId={recipeId} 
+                                price="$0.99"
+                                initialLiked={liked.liked}
                             />
                         </div>
                     </div>
