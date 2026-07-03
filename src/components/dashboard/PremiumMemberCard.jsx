@@ -49,9 +49,11 @@ const PremiumMemberCard = ({isPremium}) => {
                                 </ul>
                             </div>
 
-                            <div className="flex flex-col items-center justify-center bg-default-50 p-4 rounded-2xl border border-divider min-w-[180px]">
+                            <div className="flex flex-col items-center justify-center bg-default-50 p-4 rounded-2xl border border-divider min-w-45">
                                 <span className="text-2xl font-bold text-foreground">$4.99<span className="text-xs text-default-400 font-normal">/mo</span></span>
-                                <Button
+                               <form action={'/api/checkout_sessions'} method="POST">
+                                 <Button
+                                    type="submit"
                                     className="mt-3 w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white font-medium shadow-md shadow-amber-500/20"
                                     radius="lg"
                                     isLoading={loading}
@@ -59,6 +61,7 @@ const PremiumMemberCard = ({isPremium}) => {
                                 >
                                     Get Premium Access
                                 </Button>
+                               </form>
                             </div>
                         </div>
                     </Card>

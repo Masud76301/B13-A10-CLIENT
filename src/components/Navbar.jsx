@@ -21,6 +21,9 @@ export default function Navbar() {
   if(pathName.includes('dashboard')){
     return null;
   }
+  if(pathName.includes('success')){
+    return null;
+  }
 
   // const handleSignOut = async () => {
   //   await signOut();

@@ -1,27 +1,45 @@
 "use client";
 
+import { useSession } from "@/lib/auth-client";
 import { Bell, Book, Envelope, Gear, Heart, House, LayoutCellsLarge, LayoutSideContentLeft, Magnifier, Person, ShoppingCart, SquarePlus } from "@gravity-ui/icons";
 import { Button, Drawer, Avatar, AvatarImage, AvatarFallback, Chip } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useSession } from "@/lib/auth-client";
+
 
 export function DashboardSideBar() {
-    const { data: session } = useSession();
+    const { data: session, isPending } = useSession();
+    if (isPending) {
+        return <div>Loading...</div>;
+    }
     const user = session?.user;
-
+    const role = user?.role || "user"
+    console.log("what is the session", session);
     // Check if user is premium
-    const isPremium = user?.role === "premium" || user?.plan === "premium";
+    const isPremium = user?.plan === "premium";
 
-    const navItems = [
-        { icon: LayoutCellsLarge, label: "Overview", src: "/dashboard/user" },
-        { icon: SquarePlus, label: "Add Recipe" ,src: "/dashboard/user/add-recipe"},
-        { icon: Book, label: "My Recipe",src: "/dashboard/user/my-recipe" },
-        { icon: ShoppingCart, label: "My Purchased Recipe",src: "/dashboard/user/purchased-recipe" },
-        { icon: Heart, label: "My Favorites",src: "/dashboard/user/favourite" },
-        { icon: Person, label: "Profile",src: "/dashboard/profile" },
+    const dashboardItems = {
+        user: [
+            { icon: LayoutCellsLarge, label: "Overview", src: "/dashboard/user" },
+            { icon: SquarePlus, label: "Add Recipe", src: "/dashboard/user/add-recipe" },
+            { icon: Book, label: "My Recipe", src: "/dashboard/user/my-recipe" },
+            { icon: ShoppingCart, label: "My Purchased Recipe", src: "/dashboard/user/purchased-recipe" },
+            { icon: Heart, label: "My Favorites", src: "/dashboard/user/favourite" },
+            { icon: Person, label: "Profile", src: "/dashboard/profile" },
 
-    ];
+        ],
+        admin: [
+            { icon: LayoutCellsLarge, label: "Overview", src: "/dashboard/admin" },
+            { icon: SquarePlus, label: "Manage Users", src: "/dashboard/user/manage-users" },
+            { icon: Book, label: "Manage Recipe", src: "/dashboard/user/manage-recipe" },
+            { icon: Heart, label: "Recipe Reports", src: "/dashboard/user/reports" },
+            { icon: ShoppingCart, label: "Transaction", src: "/dashboard/user/transaction" },
+            { icon: Person, label: "Profile", src: "/dashboard/profile" },
+        ]
+    };
+
+    const navItems = dashboardItems[role]
+    console.log("navItems is", navItems);
 
     const navContent = (
         <nav className="flex flex-col gap-1">

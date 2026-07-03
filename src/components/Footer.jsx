@@ -7,10 +7,13 @@ import { MdMail } from "react-icons/md";
 import { PiPhone } from "react-icons/pi";
 
 export default function Footer() {
-    const pathName = usePathname();
-    if(pathName.includes('dashboard')){
-      return null;
-    }
+  const pathName = usePathname();
+  if (pathName.includes('dashboard')) {
+    return null;
+  }
+  if (pathName.includes('success')) {
+    return null;
+  }
   return (
     <footer className="bg-linear-to-r from-[#1a1a1a] to-[#0f0f0f] text-gray-300 py-12 ">
       <div className="container mx-auto px-4">
@@ -21,7 +24,7 @@ export default function Footer() {
           {/* Logo + short text */}
           <div className="">
             <div className="flex items-center gap-2 mb-4">
-              <Image src="/logo1.png" alt="HireLoop Logo" width={30} height={30}/>
+              <Image src="/logo1.png" alt="HireLoop Logo" width={30} height={30} />
               <h2 className="text-white text-xl lg:text-2xl font-semibold">RecipeRoom</h2>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
@@ -56,10 +59,10 @@ export default function Footer() {
           <div className="lg:pr-10">
             <h3 className="text-white text-lg font-semibold mb-4">Contact Us</h3>
             <ul className="space-y-2 text-gray-400">
-              <li className="flex gap-2 items-center"><PiPhone/> +880 1700-000000</li>
-              <li className="flex gap-2 items-center"> <MdMail/>hello@reciperoom.com</li>
-              <li className="flex gap-2 items-center"><BiLocationPlus/> Chattogram,Bangladesh</li>
-              
+              <li className="flex gap-2 items-center"><PiPhone /> +880 1700-000000</li>
+              <li className="flex gap-2 items-center"> <MdMail />hello@reciperoom.com</li>
+              <li className="flex gap-2 items-center"><BiLocationPlus /> Chattogram,Bangladesh</li>
+
             </ul>
           </div>
         </div>
@@ -69,7 +72,7 @@ export default function Footer() {
 
         {/* Bottom Section */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-          
+
           <p className="text-gray-500 text-sm">
             © {new Date().getFullYear()} RecipeRoom. All rights reserved.
           </p>
