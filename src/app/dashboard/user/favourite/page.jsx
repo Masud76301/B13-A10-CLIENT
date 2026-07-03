@@ -7,7 +7,7 @@ export default async function FavoriteRecipePage() {
   const user = await getUserSession();
   const favorites = await getFavoriteRecipe(user?.id) || [];
 
-  console.log(favorites);
+
 
   return (
     <div className="max-w-6xl mx-auto px-4 my-12">

@@ -5,11 +5,12 @@ import { Button, toast } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/auth-client";
 import { FiHeart, FiBookmark, FiAlertTriangle, FiShoppingBag, FiCreditCard } from "react-icons/fi";
-import { favoritesRecipe } from "@/lib/action/recipe";
 import { likeRecipe} from "@/lib/action/likes";
+import { favoritesRecipe } from "@/lib/action/favorite";
+import ReportIssueModal from "@/components/recipes/ReportIssueModal"; 
 
 
-export default  function RecipeActions({ recipeId,initialLiked, price = "$0.99" }) {
+export default function RecipeActions({ recipeId, initialLiked, price = "$0.99" }) {
     const { data: session } = useSession();
     const router = useRouter();
     // useTransition prevents conflicting router state updates
@@ -153,17 +154,20 @@ export default  function RecipeActions({ recipeId,initialLiked, price = "$0.99" 
 
                 <div className="border-t border-divider my-1" />
 
-                <Button
-                    variant="light"
-                    color="danger"
-                    radius="xl"
-                    size="sm"
-                    className="w-full justify-start font-medium px-4 text-default-400 hover:text-danger hover:bg-danger/5 transition-colors"
-                    onPress={() => handleAuthenticatedAction(() => alert("Report modal opened"))}
-                >
-                    <FiAlertTriangle className="size-4 shrink-0" />
-                    Report Issues with Recipe
-                </Button>
+                {/* Integration point for Report feature wrapper */}
+                <ReportIssueModal recipeId={recipeId} userMail={session?.user?.email}>
+                    <Button
+                        variant="light"
+                        color="danger"
+                        radius="xl"
+                        size="sm"
+                        className="w-full justify-start font-medium px-4 text-default-400 hover:text-danger hover:bg-danger/5 transition-colors"
+                        onPress={() => handleAuthenticatedAction(() => {})}
+                    >
+                        <FiAlertTriangle className="size-4 shrink-0" />
+                        Report Issues with Recipe
+                    </Button>
+                </ReportIssueModal>
             </div>
         </div>
     );

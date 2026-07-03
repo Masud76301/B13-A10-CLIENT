@@ -6,9 +6,7 @@ export const createRecipe = async (newRecipeData)=>{
     return serverMutation('/api/recipes',newRecipeData)
 }
 
-export const favoritesRecipe = async(favRecipeData) => {
-    return serverMutation('/api/favorite',favRecipeData)
-}
+
 
 export const deleteRecipe = async(recipeId,userId) => {
     return serverMutation(`/api/recipes/${recipeId}`,{userId},"DELETE")
