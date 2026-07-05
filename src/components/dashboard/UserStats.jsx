@@ -6,10 +6,13 @@ import { HiOutlineUsers } from "react-icons/hi2";
 import { LuZap } from "react-icons/lu";
 import { MdOutlineCheckCircle } from "react-icons/md";
 
-const stats = [
+
+
+export default function UserStats({recipes}) {
+  const stats = [
   {
     title: "Total Recipe",
-    value: "48",
+    value: recipes.length,
     icon: FaRegFileAlt,
   },
   {
@@ -29,8 +32,6 @@ const stats = [
   },
 
 ];
-
-export default function UserStats() {
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-4 w-full">
       {stats.map((item, index) => {
@@ -55,6 +56,7 @@ export default function UserStats() {
               hover:shadow-[0_0_30px_rgba(6,182,212,0.15)]
             "
           >
+       
             {/* Gradient Glow */}
             <div className="
                 absolute

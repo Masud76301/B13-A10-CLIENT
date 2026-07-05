@@ -5,9 +5,9 @@ import { useState } from 'react';
 import { FiCheck, FiStar } from 'react-icons/fi';
 import { LuCrown } from 'react-icons/lu';
 
-const PremiumMemberCard = ({isPremium}) => {
+const PremiumMemberCard = ({ isPremium }) => {
     const [loading, setLoading] = useState(false);
-    
+
     const premiumFeatures = [
         "Unlimited recipe publishing",
         "Premium profile badge",
@@ -51,17 +51,19 @@ const PremiumMemberCard = ({isPremium}) => {
 
                             <div className="flex flex-col items-center justify-center bg-default-50 p-4 rounded-2xl border border-divider min-w-45">
                                 <span className="text-2xl font-bold text-foreground">$4.99<span className="text-xs text-default-400 font-normal">/mo</span></span>
-                               <form action={'/api/checkout_sessions'} method="POST">
-                                 <Button
-                                    type="submit"
-                                    className="mt-3 w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white font-medium shadow-md shadow-amber-500/20"
-                                    radius="lg"
-                                    isLoading={loading}
-                                    onClick={() => setLoading(true)}
-                                >
-                                    Get Premium Access
-                                </Button>
-                               </form>
+                                <form action={'/api/checkout_sessions'} method="POST">
+                                    <input type="hidden" name="mode" value="subscription" />
+                                    <input type="hidden" name="priceId" value="price_1Tp8OvHBbD1KRUOkwcg3sjqv" />
+                                    <Button
+                                        type="submit"
+                                        className="mt-3 w-full bg-linear-to-r from-amber-500 to-orange-500 text-white font-medium shadow-md shadow-amber-500/20"
+                                        radius="lg"
+                                        isLoading={loading}
+                                        onClick={() => setLoading(true)}
+                                    >
+                                        Get Premium Access
+                                    </Button>
+                                </form>
                             </div>
                         </div>
                     </Card>

@@ -8,10 +8,10 @@ import Image from "next/image";
 import { FiUploadCloud } from "react-icons/fi";
 import { createRecipe } from "@/lib/action/recipe";
 
-export default function AddRecipe({user}) {
+export default function AddRecipe({user,recipes}) {
     const router = useRouter();
     const fileInputRef = useRef(null);
-
+    
   
 
     // State management for local image upload state
@@ -290,11 +290,11 @@ export default function AddRecipe({user}) {
                     {/* SECTION 3: Auto-filled Community Badge */}
                     <div className="bg-default-50 border border-divider rounded-lg p-4 flex justify-between items-center text-xs">
                         <div>
-                            <span className="text-default-500 font-medium block">Posting Space:</span>
-                            <span className="text-foreground text-sm font-semibold">RecipeRoom Community</span>
+                            <span className="text-default-500 font-medium block">Recipe Published:</span>
+                            <span className="text-foreground text-sm font-semibold">You have Recipe Published so far {recipes.length}</span>
                         </div>
                         <span className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 px-2 py-1 rounded font-medium">
-                            Verified & Approved Creator
+                           {user?.plan==="free"?"General Member":"Premium Member"} 
                         </span>
                     </div>
 

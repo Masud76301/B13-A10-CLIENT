@@ -1,41 +1,48 @@
-import { NextResponse } from 'next/server'
-import { headers } from 'next/headers'
-import { stripe } from '@/lib/stripe';
-import { getUserSession } from '@/lib/core/session';
+import { NextResponse } from "next/server";
+import { headers } from "next/headers";
+import { stripe } from "@/lib/stripe";
+import { getUserSession } from "@/lib/core/session";
 
-
-export async function POST() {
+export async function POST(req) {
     try {
-        const headersList = await headers()
-        const origin = headersList.get('origin')
+        const formData = await req.formData();
+
+        const mode = formData.get("mode");
+        const priceId = formData.get("priceId");
+
+        const headersList = await headers();
+        const origin = headersList.get("origin");
 
         const user = await getUserSession();
 
-        const PRICE_ID = "price_1Tp8OvHBbD1KRUOkwcg3sjqv"
-
-        // Create Checkout Sessions from body params.
         const session = await stripe.checkout.sessions.create({
             customer_email: user?.email,
+
             line_items: [
                 {
-                    // Provide the exact Price ID (for example, price_1234) of the product you want to sell
-                    price: PRICE_ID,
+                    price: priceId,
                     quantity: 1,
                 },
             ],
-            metadata:{
-                priceId:PRICE_ID,
-                userId: user?.id,
-                userEmail:user?.email
+
+            metadata: {
+                priceId,
+                userId: user?.id || "",
+                userEmail: user?.email || "user@mail.com",
             },
-            mode: 'subscription',
+
+            mode,
+
             success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${origin}/pricing`,
         });
-        return NextResponse.redirect(session.url, 303)
+
+        return NextResponse.redirect(session.url, 303);
+
     } catch (err) {
         return NextResponse.json(
             { error: err.message },
             { status: err.statusCode || 500 }
-        )
+        );
     }
 }

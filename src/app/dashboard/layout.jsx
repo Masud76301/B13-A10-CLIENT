@@ -8,7 +8,7 @@ const DashboardLayout = ({children}) => {
              <DashboardSideBar/>
              
             <div className='flex-1'>
-                {/* <div className='border  w-full h-18'>Navbar</div> */}
+                
                 <DashboardNavbar/>
                 {children}
             </div>

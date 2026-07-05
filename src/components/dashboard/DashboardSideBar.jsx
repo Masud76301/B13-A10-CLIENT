@@ -14,7 +14,7 @@ export function DashboardSideBar() {
     }
     const user = session?.user;
     const role = user?.role || "user"
-    console.log("what is the session", session);
+  
     // Check if user is premium
     const isPremium = user?.plan === "premium";
 
@@ -39,7 +39,7 @@ export function DashboardSideBar() {
     };
 
     const navItems = dashboardItems[role]
-    console.log("navItems is", navItems);
+   
 
     const navContent = (
         <nav className="flex flex-col gap-1">
