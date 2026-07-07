@@ -6,6 +6,7 @@ import { FiClock, FiUser, FiHeart, FiGlobe, FiLayers, FiArrowLeft } from 'react-
 import RecipeActions from '@/components/recipes/RecipeActions'; // Adjust path based on your folders
 import { isLikedRecipe } from '@/lib/api/likes';
 import { getUserSession } from '@/lib/core/session';
+import { isPurchasedRecipe } from '@/lib/api/purchased';
 
 const RecipeDetailsPage = async ({ params }) => {
     const { id } = await params;
@@ -14,6 +15,7 @@ const RecipeDetailsPage = async ({ params }) => {
     const recipeId = recipe?._id;
     const userId =user?.id;
     const liked = await isLikedRecipe(recipeId, userId);
+    const purchased = await isPurchasedRecipe(recipeId,userId);
 
     
 
@@ -185,6 +187,7 @@ const RecipeDetailsPage = async ({ params }) => {
                                 recipeId={recipeId} 
                                 price="$0.99"
                                 initialLiked={liked.liked}
+                                isPurchasedRecipe={purchased.purchase}
                             />
                         </div>
                     </div>

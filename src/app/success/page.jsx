@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { FiCheckCircle, FiMail, FiBookOpen, FiArrowRight } from 'react-icons/fi'
 import Image from 'next/image'
 import { subscription } from '@/lib/action/subscription'
+import { purchasedRecipe } from '@/lib/action/purchased'
 
 export default async function Success({ searchParams }) {
   const { session_id } = await searchParams
@@ -18,13 +19,14 @@ export default async function Success({ searchParams }) {
   } = await stripe.checkout.sessions.retrieve(session_id, {
     expand: ['line_items', 'payment_intent']
   })
-
+  const {mode} =metadata;
   if (status === 'open') {
     return redirect('/')
   }
 
   if (status === 'complete') {
-    await subscription({...metadata,sessionId: session_id})
+    {mode==="payment"?await purchasedRecipe({...metadata,sessionId:session_id}):await subscription({...metadata,sessionId: session_id});}
+    
     return (
       <div className="min-h-screen flex items-center justify-center px-4 bg-default-50/50">
         <div className="max-w-md w-full bg-background border border-default-200 rounded-2xl p-8 text-center shadow-sm">
@@ -34,9 +36,12 @@ export default async function Success({ searchParams }) {
           </div>
 
           {/* Heading */}
-          <h1 className="text-2xl font-bold tracking-tight text-foreground mt-4">
+          {mode==="payment"? <h1 className="text-2xl font-bold tracking-tight text-foreground mt-4">
+            Payment Complete
+          </h1>:<h1 className="text-2xl font-bold tracking-tight text-foreground mt-4">
             Subscription Confirmed
-          </h1>
+          </h1>}
+         
           <p className="text-default-500 text-sm mt-1">
             You can now create and post unlimited recipes. Let is see what amazing dishes you bring to RecipeRoom.
           </p>

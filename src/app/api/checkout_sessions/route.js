@@ -9,6 +9,7 @@ export async function POST(req) {
 
         const mode = formData.get("mode");
         const priceId = formData.get("priceId");
+        const recipeId = formData.get("recipeId");
 
         const headersList = await headers();
         const origin = headersList.get("origin");
@@ -27,8 +28,10 @@ export async function POST(req) {
 
             metadata: {
                 priceId,
+                recipeId,
                 userId: user?.id || "",
                 userEmail: user?.email || "user@mail.com",
+                mode,
             },
 
             mode,
