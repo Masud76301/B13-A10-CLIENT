@@ -9,7 +9,7 @@ export async function proxy(request) {
         headers: await headers() 
     })
 
-    if(!session){
+    if(!session || session?.user?.role==="admin"){
 
         return NextResponse.redirect(new URL('/auth/signin', request.url))
     }

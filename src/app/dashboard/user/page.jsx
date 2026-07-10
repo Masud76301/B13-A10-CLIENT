@@ -1,6 +1,9 @@
 
 import PremiumMemberCard from '@/components/dashboard/PremiumMemberCard';
 import UserStats from '@/components/dashboard/UserStats';
+import { getFavoriteRecipe } from '@/lib/api/favourite';
+import { likeReceived } from '@/lib/api/likes';
+import { getPurchasedRecipes } from '@/lib/api/purchased';
 import { getUserRecipes } from '@/lib/api/recipe';
 import { getUserSession } from '@/lib/core/session';
 import {  Chip } from '@heroui/react';
@@ -11,6 +14,9 @@ const UserHomePage = async () => {
     const user = await getUserSession();
     const isPremium = user?.plan === "premium";
     const recipes = await getUserRecipes(user?.id);
+    const favorites = await getFavoriteRecipe(user?.id)
+    const purchased = await getPurchasedRecipes(user?.id);
+    const likes = await likeReceived(user?.id);
 
     return (
         <div className="flex-1 p-6 space-y-8">
@@ -32,7 +38,7 @@ const UserHomePage = async () => {
             </div>
 
             {/* Dashboard Stats */}
-            <UserStats recipes={recipes} />
+            <UserStats recipes={recipes} favorites={favorites} purchased={purchased} likes={likes} />
             <PremiumMemberCard isPremium={isPremium}/>
 
             

@@ -1,34 +1,32 @@
 "use client";
 
-import { Heart, ShoppingBag, ShoppingCart, ThumbsUp } from "@gravity-ui/icons";
+import { BookOpen, Persons, Flag, CrownDiamond } from "@gravity-ui/icons";
 import { FaRegFileAlt } from "react-icons/fa";
-import { HiOutlineUsers } from "react-icons/hi2";
-import { LuZap } from "react-icons/lu";
-import { MdOutlineCheckCircle } from "react-icons/md";
 
 
 
-export default function UserStats({recipes,favorites,purchased,likes}) {
+
+export default function AdminStats({recipes,favorites,purchased,likes}) {
   const stats = [
   {
-    title: "Total Recipe",
-    value: recipes.length,
-    icon: FaRegFileAlt,
+    title: "Total Users",
+    value: 10,
+    icon: Persons,
   },
   {
-    title: "Total Favorites",
-    value: favorites.length,
-    icon: Heart,
+    title: "Total Recipes",
+    value: 860,
+    icon: BookOpen,
   },
   {
-    title: "Total Likes Received",
-    value: likes.totalLikes,
-    icon: ThumbsUp,
+    title: "Total Premium Members",
+    value: 20,
+    icon: CrownDiamond,
   },
   {
-    title: "Total Purchased Recipe",
-    value: purchased.length,
-    icon: ShoppingCart,
+    title: "Total Reports",
+    value: 9,
+    icon: Flag,
   },
 
 ];

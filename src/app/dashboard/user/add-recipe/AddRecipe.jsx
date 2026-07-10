@@ -30,7 +30,7 @@ export default function AddRecipe({user,recipes}) {
         instructions: "",
         userId:user?.id,
         authorName:user?.name,
-        likeCount:10,
+        likeCount:0,
         isFeatured:false,
         
     });
@@ -42,7 +42,7 @@ export default function AddRecipe({user,recipes}) {
             recipeName: "",
             recipeImage: "", // Holds the ImgBB uploaded URL/image data
             category: "",
-            difficultyLevel: "", // Set to your default starting value if applicable
+            difficultyLevel: "", // Set to your default starting value if 
             cuisineType: "",
             preparationTime: "",
             ingredients: "",

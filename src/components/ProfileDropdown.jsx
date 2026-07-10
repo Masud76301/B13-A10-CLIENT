@@ -18,6 +18,27 @@ export function ProfileDropdown({ user }) {
             },
         });
     };
+
+    const role = user?.role || "user"
+
+
+    const DropdownItems = {
+        user: [
+            { label: "My Favorites", src: "/dashboard/user/favourite" },
+            { label: "My Recipe", src: "/dashboard/user/my-recipe" },
+           
+
+        ],
+        admin: [
+            { label: "Manage User", src: "/dashboard/admin/manage-users" },
+            { label: "Manage Recipe", src: "/dashboard/admin/manage-recipe" },
+            
+        ]
+    };
+
+    const menuItems = DropdownItems[role]
+
+
     return (
         <Dropdown>
             <Button aria-label="Menu" variant="Ghost" className="flex  pl-1 py-5 border rounded-3xl">
@@ -34,10 +55,10 @@ export function ProfileDropdown({ user }) {
                     if (key === "logout") handleSingOut();
                 }}>
                     <Dropdown.Item id="new-file" textValue="New file">
-                        <Link href="/dashboard/user/my-favorites"> <Label>My Favorites</Label></Link>
+                        <Link href={menuItems[0].src}> <Label>{menuItems[0].label}</Label></Link>
                     </Dropdown.Item>
                     <Dropdown.Item id="copy-link" textValue="Copy link">
-                        <Link href="/dashboard/user/my-recipe"><Label>My Recipe</Label></Link>
+                        <Link href={menuItems[1].src}> <Label>{menuItems[1].label}</Label></Link>
                     </Dropdown.Item>
                     <Dropdown.Item id="edit-file" textValue="Edit file">
                         <Link href='/dashboard/profile'><Label>Profile</Label></Link>

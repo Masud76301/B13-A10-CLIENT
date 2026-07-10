@@ -15,20 +15,22 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     },
   },
-  user: {
-    additionalFields: {
-      role: {
-        type: "string",
-        required: false,
-        defaultValue: "user"
-      },
-      plan: {
-        type: "string",
-        required: false,
-        defaultValue: "free"
-      }
-    }
+ user: {
+  additionalFields: {
+    role: {
+      type: "string",
+      defaultValue: "user",
+    },
+    plan: {
+      type: "string",
+      defaultValue: "free",
+    },
+    status: {
+      type: "string",
+      defaultValue: "active",
+    },
   },
+},
   database: mongodbAdapter(db, {
     // Optional: if you don't provide a client, database transactions won't be enabled.
     client

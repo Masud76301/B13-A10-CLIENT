@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "@/lib/auth-client";
-import { Bell, Book, Envelope, Gear, Heart, House, LayoutCellsLarge, LayoutSideContentLeft, Magnifier, Person, ShoppingCart, SquarePlus } from "@gravity-ui/icons";
+import { Bell, Book, Envelope, Gear, Heart, House, LayoutCellsLarge, LayoutSideContentLeft, Magnifier, Person, ShoppingCart, SquarePlus,Persons,Flag,CreditCard } from "@gravity-ui/icons";
 import { Button, Drawer, Avatar, AvatarImage, AvatarFallback, Chip } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -30,10 +30,10 @@ export function DashboardSideBar() {
         ],
         admin: [
             { icon: LayoutCellsLarge, label: "Overview", src: "/dashboard/admin" },
-            { icon: SquarePlus, label: "Manage Users", src: "/dashboard/user/manage-users" },
-            { icon: Book, label: "Manage Recipe", src: "/dashboard/user/manage-recipe" },
-            { icon: Heart, label: "Recipe Reports", src: "/dashboard/user/reports" },
-            { icon: ShoppingCart, label: "Transaction", src: "/dashboard/user/transaction" },
+            { icon: Persons, label: "Manage Users", src: "/dashboard/admin/manage-users" },
+            { icon: Book, label: "Manage Recipe", src: "/dashboard/admin/manage-recipe" },
+            { icon: Flag, label: "Recipe Reports", src: "/dashboard/admin/reports" },
+            { icon: CreditCard, label: "Transaction", src: "/dashboard/admin/transaction" },
             { icon: Person, label: "Profile", src: "/dashboard/profile" },
         ]
     };
