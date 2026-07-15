@@ -14,7 +14,7 @@ export default function RecipeTable({ recipes, userId }) {
 
   const handleDeleteRecipe = async (recipeId, currentUserId) => {
     const res = await deleteRecipe(recipeId, currentUserId);
-    console.log("what is res:",res);
+    
     if (res?.deletedCount > 0 || res?.acknowledged) {
        router.refresh();
     }

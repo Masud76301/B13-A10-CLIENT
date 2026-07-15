@@ -78,7 +78,6 @@ export default function EditRecipeModal({ recipe }) {
       if (res.modifiedCount){
         toast.success("Recipe Updated Successfully!");
         router.refresh();
-        router.push("/dashboard/user/my-recipe");
       }
 
     } catch (error) {
