@@ -10,9 +10,15 @@ export const getUserRecipes = async (userId)=>{
    
 }
 
-export const getAllRecipes = async (page)=>{
-    return serverFetch(`/api/recipes?page=${page}`)
-}
+export const getAllRecipes = async (page, category) => {
+    // 1. If there is a category, explicitly add "&category="
+    if (category) {
+        return serverFetch(`/api/recipes?page=${page}&category=${category}`);
+    } 
+    
+    // 2. If category is empty, don't add the "&" symbol at all
+    return serverFetch(`/api/recipes?page=${page}`);
+};
 
 
 export const getRecipeById = async (recipeId) =>{

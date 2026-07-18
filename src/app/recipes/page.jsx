@@ -26,6 +26,7 @@ const RecipePage = async ({ searchParams }) => {
     // Helper function to maintain search parameters across pagination links
     const createPageUrl = (pageNumber) => {
         const query = new URLSearchParams();
+        
         if (categoryParam) query.set('category', categoryParam);
         query.set('page', pageNumber.toString());
         return `/recipes?${query.toString()}`;
