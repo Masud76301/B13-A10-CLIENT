@@ -6,26 +6,28 @@ import { FaRegFileAlt } from "react-icons/fa";
 
 
 
-export default function AdminStats({recipes,favorites,purchased,likes}) {
+export default function AdminStats({user, recipes,premiumMembers,reports}) {
+console.log("user is ", user);
+  
   const stats = [
   {
     title: "Total Users",
-    value: 10,
+    value: user?.length,
     icon: Persons,
   },
   {
     title: "Total Recipes",
-    value: 860,
+    value: recipes.length,
     icon: BookOpen,
   },
   {
     title: "Total Premium Members",
-    value: 20,
+    value: premiumMembers,
     icon: CrownDiamond,
   },
   {
     title: "Total Reports",
-    value: 9,
+    value: reports.length,
     icon: Flag,
   },
 

@@ -11,6 +11,7 @@ import { usePathname } from "next/navigation";
 import { ProfileDropdown } from "../ProfileDropdown";
 import { ThemeSwitch } from "../ThemeSwitch";
 import { Plus } from "@gravity-ui/icons";
+import { PiCookingPotFill } from "react-icons/pi";
 // import { signOut, useSession } from "../lib/auth-client";
 
 
@@ -60,9 +61,13 @@ export default function DashboardNavbar() {
                     {/* Desktop Menu */}
                     <div className="hidden items-center  gap-6 md:flex">
 
-                        <Link href="/dashboard/user/add-recipe">
+                        {user?.role === "user" ? (<Link href="/dashboard/user/add-recipe">
                             <Button  className="rounded-3xl "> <Plus/>  Add Recipe</Button>
-                        </Link>
+                        </Link>):(<Link href="/recipes">
+                        <Button  className="rounded-3xl "><PiCookingPotFill />
+                        Recipe</Button>
+                        </Link>)}
+                        
 
                         {/* Vertical Divider */}
                         <div className="h-6 w-px bg-green-400" />

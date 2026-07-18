@@ -72,7 +72,7 @@ const AddRecipePage = async () => {
                     {/* Premium Upgrade Stripe CTA Footer Button */}
                     <div className="px-6 py-4 bg-default-50 border-t border-default-100 flex flex-col gap-2">
                         <Link 
-                            href="/dashboard/user"
+                            href="http://localhost:3000/#pricing"
                             className="w-full inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm py-2.5 px-4 rounded-xl shadow-sm transition-colors"
                         >
                             <BiCrown className="text-base" />

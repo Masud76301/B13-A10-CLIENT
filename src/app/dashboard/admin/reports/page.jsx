@@ -1,6 +1,7 @@
-import { getRecipeReports } from '@/lib/action/reports';
+
 import React from 'react';
 import ReportsTable from './ReportsTable';
+import { getRecipeReports } from '@/lib/api/reports';
 
 const RecipeReportPage = async () => {
     const reports = await getRecipeReports() || [];

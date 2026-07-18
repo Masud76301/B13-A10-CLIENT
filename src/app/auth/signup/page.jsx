@@ -80,7 +80,7 @@ export default function SignUpPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+        <div className="min-h-screen flex items-center justify-center px-4">
             <Card className="w-full max-w-md p-2 shadow-xl">
                 {/* HeroUI v3 Header */}
                 <Card.Header className="text-center flex flex-col gap-1 pt-6">

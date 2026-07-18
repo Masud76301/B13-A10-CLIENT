@@ -14,11 +14,11 @@ import Link from "next/link";
 export default async function Home() {
   // Fetch featured recipes from server
   // const featuredRecipes = await getFeaturedRecipes();
-  const featuredRecipes = await getFeaturedRecipes(); 
+  const featuredRecipes = await getFeaturedRecipes();
   const popularRecipes = await getPopularRecipes();
   const user = await getUserSession();
   const isPremium = user?.plan === "premium";
-  console.log("User Plan is ", user);
+
   return (
     <div>
       {/* Hero Banner Section */}
@@ -33,10 +33,13 @@ export default async function Home() {
       <PopularRecipe popularRecipes={popularRecipes} />
 
       {/* How to Start */}
-      <HowToStart/>
+      <HowToStart />
 
       {/* PremiumMembership */}
-      <PremiumMembership isPremium={isPremium}/>
+      <div id="pricing">
+        <PremiumMembership isPremium={isPremium} />
+
+      </div>
 
     </div>
   );
