@@ -17,7 +17,7 @@ console.log("user is ", user);
   },
   {
     title: "Total Recipes",
-    value: recipes.length,
+    value: recipes,
     icon: BookOpen,
   },
   {

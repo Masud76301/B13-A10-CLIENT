@@ -12,6 +12,7 @@ const AdminDashboardPage =async () => {
     const user = await getUserSession();
     const allUser = await getAllUsers();
     const allRecipes = await getAllRecipes(); 
+    const totalRecipes = allRecipes.totalRecipe
     const reports = await getRecipeReports();
     const premiumMembers = allUser.filter(user=>user.plan ==="premium").length;
     return (
@@ -23,7 +24,7 @@ const AdminDashboardPage =async () => {
             </div>
 
             {/* Dashboard Stats */}
-            <AdminStats user={allUser} recipes={allRecipes} premiumMembers={premiumMembers} reports={reports} />
+            <AdminStats user={allUser} recipes={totalRecipes} premiumMembers={premiumMembers} reports={reports} />
            
 
 

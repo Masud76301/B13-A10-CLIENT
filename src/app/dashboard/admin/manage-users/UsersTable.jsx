@@ -4,19 +4,55 @@ import { Table, Button, toast } from "@heroui/react";
 import { FiEye, FiUserCheck, FiUserX } from "react-icons/fi";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+import { authClient } from "@/lib/auth-client"; // Adjust path to your auth client import
+import { useRouter } from "next/navigation";
 
 export default function UsersTable({ users }) {
-  // Action handlers for Block/Unblock buttons
-  const handleBlockUser = (userId) => {
-    // Implement your block logic / server actions here
-    
-    toast.danger(`Blocking user: ${userId}`);
+  const router = useRouter();
+  const [loadingUserId, setLoadingUserId] = useState(null);
+
+  // Action handlers for Block (Ban) user
+  const handleBlockUser = async (userId) => {
+    try {
+      setLoadingUserId(userId);
+      const { error } = await authClient.admin.banUser({
+        userId: userId,
+        banReason: "Violation of terms of service", // Optional reason
+      });
+
+      if (error) {
+        toast.danger(error.message || "Failed to block user");
+      } else {
+        toast.success("User blocked successfully");
+        router.refresh(); // Refresh page data
+      }
+    } catch (err) {
+      toast.danger("An error occurred while blocking the user");
+    } finally {
+      setLoadingUserId(null);
+    }
   };
 
-  const handleUnblockUser = (userId) => {
-    // Implement your unblock logic / server actions here
-    console.log("Unblocking user:", userId);
+  // Action handlers for Unblock (Unban) user
+  const handleUnblockUser = async (userId) => {
+    try {
+      setLoadingUserId(userId);
+      const { error } = await authClient.admin.unbanUser({
+        userId: userId,
+      });
+
+      if (error) {
+        toast.danger(error.message || "Failed to unblock user");
+      } else {
+        toast.success("User unblocked successfully");
+        router.refresh(); // Refresh page data
+      }
+    } catch (err) {
+      toast.danger("An error occurred while unblocking the user");
+    } finally {
+      setLoadingUserId(null);
+    }
   };
 
   return (
@@ -35,20 +71,20 @@ export default function UsersTable({ users }) {
           <Table.Body emptyContent={"No users found in the database."}>
             {users?.map((user) => {
               // Standardizes key formats safely for MongoDB format
-              const userId = user._id?.$oid || user._id;
-          
+              const userId = user._id?.$oid || user._id || user.id;
 
-             // Format date string beautifully (Handles standard ISO string or Date object directly)
+              // Format date string beautifully
               const joinDate = user.createdAt 
-                ? new Date(user.createdAt).toLocaleDateString('en-US', { year:      'numeric', month: 'short', day: 'numeric' })
+                ? new Date(user.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
                 : "N/A";
 
-              // Check user status based on a blocked condition (fallback to active if field isn't set yet)
-              const isBlocked = user.status === "blocked"; 
+              // Better Auth uses `banned` (boolean) field on user object
+              const isBlocked = Boolean(user.banned); 
+              const isLoading = loadingUserId === userId;
 
               return (
                 <Table.Row key={userId}>
-                  {/* USER COLUMN (AVATAR + NAME & EMAIL) */}
+                  {/* USER COLUMN */}
                   <Table.Cell>
                     <div className="flex items-center gap-3">
                       <div className="relative w-10 h-10 flex-shrink-0 overflow-hidden rounded-full bg-default-100 border border-divider">
@@ -134,6 +170,7 @@ export default function UsersTable({ users }) {
                           isIconOnly
                           size="sm"
                           variant="light"
+                          isLoading={isLoading}
                           aria-label="Unblock User"
                           onClick={() => handleUnblockUser(userId)}
                           className="text-success hover:bg-success-50 dark:hover:bg-success-950/30 transition-all"
@@ -145,6 +182,7 @@ export default function UsersTable({ users }) {
                           isIconOnly
                           size="sm"
                           variant="light"
+                          isLoading={isLoading}
                           aria-label="Block User"
                           onClick={() => handleBlockUser(userId)}
                           className="text-danger hover:bg-danger-50 dark:hover:bg-danger-950/30 transition-all"

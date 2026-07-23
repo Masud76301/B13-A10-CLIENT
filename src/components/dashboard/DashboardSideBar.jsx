@@ -46,13 +46,14 @@ export function DashboardSideBar() {
             {navItems.map((item) => (
 
                 <Link href={item.src} key={item.label}>
-                    <button
+                    <Button
+                        variant="Ghost"
                         className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground transition-colors hover:bg-default"
                         type="button"
                     >
                         <item.icon className="size-5 text-muted" />
                         {item.label}
-                    </button>
+                    </Button>
                 </Link>
             ))}
         </nav>

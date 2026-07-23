@@ -1,6 +1,6 @@
 // import { serverFetch } from "../core/server";
 
-import { serverFetch } from "../core/serverFetch"
+import { publicServerFetch, serverFetch } from "../core/serverFetch"
 
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
@@ -13,11 +13,11 @@ export const getUserRecipes = async (userId)=>{
 export const getAllRecipes = async (page, category) => {
     // 1. If there is a category, explicitly add "&category="
     if (category) {
-        return serverFetch(`/api/recipes?page=${page}&category=${category}`);
+        return publicServerFetch(`/api/recipes?page=${page}&category=${category}`);
     } 
     
     // 2. If category is empty, don't add the "&" symbol at all
-    return serverFetch(`/api/recipes?page=${page}`);
+    return publicServerFetch(`/api/recipes?page=${page}`);
 };
 
 

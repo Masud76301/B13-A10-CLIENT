@@ -6,6 +6,8 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 
 
+
+
 export const serverFetch = async (path)=>{
    const token = await getTokenServer();
     
@@ -20,3 +22,15 @@ export const serverFetch = async (path)=>{
     return res.json();
 }
 
+export const publicServerFetch = async (path)=>{
+
+    
+    const res = await fetch (`${baseUrl}${path}`,{
+        headers: {
+            'Content-Type': 'application/json',
+
+        },
+    });
+    
+    return res.json();
+}
